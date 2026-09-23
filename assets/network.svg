@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360">
+<rect width="760" height="360" rx="30" fill="#f7fbff"/>
+<text x="84" y="40" font-family="Arial" font-size="18" font-weight="700" fill="#173c6b">Eingabeschicht</text>
+<text x="310" y="40" font-family="Arial" font-size="18" font-weight="700" fill="#173c6b">Verborgene Schicht</text>
+<text x="590" y="40" font-family="Arial" font-size="18" font-weight="700" fill="#173c6b">Ausgabeschicht</text>
+<g fill="#7cc5ff" stroke="#2e6aa6" stroke-width="3"><circle cx="145" cy="100" r="27"/><circle cx="145" cy="180" r="27"/><circle cx="145" cy="260" r="27"/></g>
+<g fill="#9be3b4" stroke="#3f7f5c" stroke-width="3"><circle cx="385" cy="85" r="25"/><circle cx="385" cy="155" r="25"/><circle cx="385" cy="225" r="25"/><circle cx="385" cy="295" r="25"/></g>
+<circle cx="645" cy="190" r="34" fill="#ffd18a" stroke="#d47a2c" stroke-width="3"/>
+<g stroke="#8da6b9" stroke-width="4" opacity=".72">
+<path d="M172 100L360 85M172 100L360 155M172 100L360 225M172 100L360 295M172 180L360 85M172 180L360 155M172 180L360 225M172 180L360 295M172 260L360 85M172 260L360 155M172 260L360 225M172 260L360 295"/>
+<path d="M410 85L611 190M410 155L611 190M410 225L611 190M410 295L611 190"/>
+</g></svg>

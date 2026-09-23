@@ -1,0 +1,10 @@
+{
+  "name": "neuroquest-ki-netlify",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Interaktiver Lernkurs zu neuronalen Netzen mit Netlify Functions und Netlify Blobs",
+  "dependencies": {
+    "@netlify/blobs": "11.1.0"
+  }
+}

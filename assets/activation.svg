@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300">
+<rect width="760" height="300" rx="28" fill="#f7fbff"/>
+<g font-family="Arial" fill="#173c6b" font-size="17" font-weight="700"><text x="70" y="32">Schwelle</text><text x="300" y="32">ReLU</text><text x="545" y="32">Sigmoid</text></g>
+<g stroke="#98acbd" stroke-width="2"><path d="M50 230h180M140 60v190M280 230h180M370 60v190M510 230h180M600 60v190"/></g>
+<path d="M55 210H135V95H220" fill="none" stroke="#2e6aa6" stroke-width="5"/>
+<path d="M285 210H370L450 95" fill="none" stroke="#3f7f5c" stroke-width="5"/>
+<path d="M520 205C555 205 565 185 580 150S620 95 680 95" fill="none" stroke="#d47a2c" stroke-width="5"/>
+<text x="48" y="270" font-family="Arial" font-size="14" fill="#667484">0/1</text><text x="280" y="270" font-family="Arial" font-size="14" fill="#667484">negative → 0</text><text x="510" y="270" font-family="Arial" font-size="14" fill="#667484">zwischen 0 und 1</text>
+</svg>
