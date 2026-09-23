@@ -174,8 +174,8 @@ function renderSection(){
       <div class="section-score"><strong>${done}/${core.length}</strong><span>Pflichtaufgaben erledigt</span></div>
     </section>
     <section class="lesson-body">${s.content}</section>
-    <section class="quest-block"><div class="quest-head"><div><span class="eyebrow">Quest-Zone</span><h3>Üben & Anwenden</h3><p>Du kannst jede Musterlösung anzeigen. Vorher fragt dich der Kurs, ob du noch einmal selbst versuchen möchtest.</p></div></div>${s.tasks.map((t,i)=>renderTask(t,i+1)).join('')}</section>
-    <section class="lesson-body"><h3>🏅 Deine Abzeichen</h3><div class="achievement-strip">${achievements()}</div></section>
+    <section class="quest-block"><div class="quest-head"><div><span class="eyebrow">Quest-Zone</span><h3>Üben & Anwenden</h3><p>Sie können jede Musterlösung anzeigen. Vorher fragt der Kurs, ob Sie es noch einmal selbst versuchen möchten.</p></div></div>${s.tasks.map((t,i)=>renderTask(t,i+1)).join('')}</section>
+    <section class="lesson-body"><h3>🏅 Ihre Abzeichen</h3><div class="achievement-strip">${achievements()}</div></section>
     <div class="section-nav"><button class="secondary-btn" id="prevSection" ${idx===0?'disabled':''}>← Vorheriges Kapitel</button><button class="primary-btn" id="nextSection" ${idx===SECTIONS.length-1?'disabled':''}>Nächstes Kapitel →</button></div>`;
   bindTaskEvents();
   bindInteractiveLabs();
@@ -204,7 +204,7 @@ function renderTaskBody(t,a){
     case 'multi': return t.options.map(([v,l])=>`<label class="option"><input type="checkbox" value="${esc(v)}" ${(a||[]).includes(v)?'checked':''}><span>${esc(l)}</span></label>`).join('');
     case 'text': return `<input class="text-input" type="text" value="${esc(a||'')}" placeholder="Antwort eingeben" autocomplete="off">`;
     case 'number': return `<input class="number-input" inputmode="decimal" type="text" value="${esc(a||'')}" placeholder="Zahl eingeben" autocomplete="off">`;
-    case 'free': return `<textarea class="free-input" placeholder="${esc(t.placeholder||'Formuliere deine Antwort.')}" maxlength="2000">${esc(a||'')}</textarea>${revealHas(t.id)?`<div class="feedback neutral">Vergleiche deine Antwort mit der Musterlösung. Du entscheidest anschließend selbst, ob sie die Kriterien erfüllt.</div>`:''}`;
+    case 'free': return `<textarea class="free-input" placeholder="${esc(t.placeholder||'Formulieren Sie Ihre Antwort.')}" maxlength="2000">${esc(a||'')}</textarea>${revealHas(t.id)?`<div class="feedback neutral">Vergleichen Sie Ihre Antwort mit der Musterlösung. Entscheiden Sie anschließend selbst, ob sie die Kriterien erfüllt.</div>`:''}`;
     case 'matching': return renderMatching(t,a||{});
     case 'order': return renderOrder(t,a||defaultAnswer(t));
     case 'rgb': return renderRGB(t,a||[128,128,128]);
@@ -243,25 +243,33 @@ function normalizeProductAnswer(t,a){
 function renderProduct(t,a){
   const answer=normalizeProductAnswer(t,a);
   const title=t.productTitle||'Lernprodukt';
-  const subtitle=t.productSubtitle||'Deine Eingaben werden gespeichert.';
+  const subtitle=t.productSubtitle||'Ihre Eingaben werden gespeichert.';
   const icon=t.productIcon||'📄';
   const fields=(t.fields||[]).map(f=>{
     if(f.kind==='checks'){
       const vals=answer[f.key]||[];
-      return `<fieldset class="product-field" data-product-field="${esc(f.key)}"><legend>${esc(f.label)}</legend><div class="product-check-grid">${f.options.map(opt=>`<label class="product-check"><input type="checkbox" value="${esc(opt)}" ${vals.includes(opt)?'checked':''}><span>${esc(opt)}</span></label>`).join('')}</div><small>Wähle ${f.min===f.max?`genau ${f.min}`:`mindestens ${f.min}`} Option${f.min===1?'':'en'}.</small></fieldset>`;
+      return `<fieldset class="product-field" data-product-field="${esc(f.key)}"><legend>${esc(f.label)}</legend><div class="product-check-grid">${f.options.map(opt=>`<label class="product-check"><input type="checkbox" value="${esc(opt)}" ${vals.includes(opt)?'checked':''}><span>${esc(opt)}</span></label>`).join('')}</div><small>Wählen Sie ${f.min===f.max?`genau ${f.min}`:`mindestens ${f.min}`} Option${f.min===1?'':'en'}.</small></fieldset>`;
     }
     if(f.kind==='select') return `<label class="product-field"><span>${esc(f.label)}</span><select class="product-select" data-product-field="${esc(f.key)}"><option value="">Bitte auswählen …</option>${(f.options||[]).map(opt=>`<option value="${esc(opt)}" ${answer[f.key]===opt?'selected':''}>${esc(opt)}</option>`).join('')}</select></label>`;
     if(f.kind==='textarea') return `<label class="product-field"><span>${esc(f.label)}</span><textarea class="product-textarea" data-product-field="${esc(f.key)}" placeholder="${esc(f.placeholder||'')}" maxlength="1200">${esc(answer[f.key]||'')}</textarea></label>`;
     return `<label class="product-field"><span>${esc(f.label)}</span><input class="product-input" data-product-field="${esc(f.key)}" type="text" value="${esc(answer[f.key]||'')}" placeholder="${esc(f.placeholder||'')}" maxlength="220"></label>`;
   }).join('');
-  const preview=t.productKind==='aiDesign'?renderAIDesignPreview(answer):'';
-  return `<div class="learning-product-builder"><div class="product-banner"><div><span class="eyebrow">Dein Lernprodukt</span><h4>${esc(title)}</h4><p>${esc(subtitle)}</p></div><span class="product-icon">${icon}</span></div>${fields}${preview}<div class="product-note">💾 Mit Anmeldung wird dein Lernprodukt geräteübergreifend gespeichert. Über <strong>PDF / Drucken</strong> kannst du eine saubere Fassung ausgeben.</div></div>`;
+  let preview='';
+  if(t.productKind==='aiDesign') preview=renderAIDesignPreview(answer);
+  if(t.productKind==='blackboxCase') preview=renderBlackboxPreview(answer);
+  return `<div class="learning-product-builder"><div class="product-banner"><div><span class="eyebrow">Ihr Lernprodukt</span><h4>${esc(title)}</h4><p>${esc(subtitle)}</p></div><span class="product-icon">${icon}</span></div>${fields}${preview}<div class="product-note">💾 Mit Anmeldung wird Ihr Lernprodukt geräteübergreifend gespeichert. Über <strong>PDF / Drucken</strong> können Sie eine saubere Fassung ausgeben.</div></div>`;
 }
 function renderAIDesignPreview(a){
   const i1=a.input1||'Eingabe 1',i2=a.input2||'Eingabe 2',i3=a.input3||'Eingabe 3';
   const w1=a.weight1||'?',w2=a.weight2||'?',w3=a.weight3||'?';
   const act=a.activation||'Aktivierung',out=a.output||'Ausgabe';
   return `<div class="ai-preview-wrap"><span class="eyebrow">Live-Schaubild</span><div class="ai-design-preview"><div class="design-inputs"><span>${esc(i1)}<br><b>${esc(w1)}</b></span><span>${esc(i2)}<br><b>${esc(w2)}</b></span><span>${esc(i3)}<br><b>${esc(w3)}</b></span></div><div class="design-arrow">→</div><div class="design-hidden">verborgene Verarbeitung<br><small>${esc((a.hidden||'Signale kombinieren').slice(0,80))}</small></div><div class="design-arrow">→</div><div class="design-activation">${esc(act)}</div><div class="design-arrow">→</div><div class="design-output">${esc(out)}</div></div></div>`;
+}
+function renderBlackboxPreview(a){
+  const caseName=a.case||'Anwendungsfall';
+  const input=a.input||'konkrete Eingabe';
+  const output=a.output||'konkrete Ausgabe';
+  return `<div class="ai-preview-wrap"><span class="eyebrow">Schaubild Ihrer Fallkarte</span><div class="blackbox-preview"><div class="bb-case">${esc(caseName)}</div><div class="bb-flow"><div class="bb-input">${esc(input)}</div><div class="design-arrow">→</div><div class="bb-layer"><b>Eingabeschicht</b><small>Werte aufnehmen</small></div><div class="design-arrow">→</div><div class="bb-layer hidden"><b>verborgene Schicht</b><small>Neuronen verarbeiten · Verbindungen geben Signale weiter</small></div><div class="design-arrow">→</div><div class="bb-layer"><b>Ausgabeschicht</b><small>Ergebniswerte bereitstellen</small></div><div class="design-arrow">→</div><div class="bb-output">${esc(output)}</div></div></div></div>`;
 }
 function renderSolution(t){
   const criteria=t.criteria?`<ul class="criteria-list">${t.criteria.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'';
@@ -327,11 +335,20 @@ function bindPixel(card,t){
   $$('.palette-btn',card).forEach(b=>b.addEventListener('click',()=>{state.selectedPaint[t.id]=b.dataset.paint;$$('.palette-btn',card).forEach(x=>x.classList.toggle('selected',x===b))}));
   $$('.paint-cell',card).forEach(cell=>cell.addEventListener('click',()=>{const a=[...currentAnswer(t.id,defaultAnswer(t))];a[Number(cell.dataset.cell)]=state.selectedPaint[t.id]||t.palette[0][0];setAnswer(t.id,a);const color=Object.fromEntries(t.palette.map(([k,c])=>[k,c]))[a[Number(cell.dataset.cell)]];cell.style.background=color}));
 }
+function updateProductPreview(card,t,a){
+  if(!['aiDesign','blackboxCase'].includes(t.productKind)) return;
+  const html=t.productKind==='aiDesign'?renderAIDesignPreview(a):renderBlackboxPreview(a);
+  const current=$('.ai-preview-wrap',card);
+  if(current){ current.outerHTML=html; return; }
+  const note=$('.product-note',card);
+  if(note) note.insertAdjacentHTML('beforebegin',html);
+}
+
 function bindProduct(card,t){
   const answer=()=>normalizeProductAnswer(t,currentAnswer(t.id,defaultAnswer(t)));
   $$('.product-input,.product-textarea,.product-select',card).forEach(el=>el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{
     const a=answer();a[el.dataset.productField]=el.value;setAnswer(t.id,a);
-    if(t.productKind==='aiDesign') rerenderKeepScroll();
+    updateProductPreview(card,t,a);
   }));
   $$('.product-field[data-product-field]',card).forEach(field=>{
     $$('input[type=checkbox]',field).forEach(cb=>cb.addEventListener('change',()=>{
@@ -364,15 +381,15 @@ function productInvalid(t,a){
 function saveProduct(t){
   const a=normalizeProductAnswer(t,currentAnswer(t.id,defaultAnswer(t)));setAnswer(t.id,a);
   const missing=productMissing(t,a);
-  if(missing.length){state.lastFeedback[t.id]={type:'bad',html:`Das Lernprodukt ist noch nicht vollständig. Prüfe: ${missing.map(esc).join(' · ')}`};rerenderKeepScroll();return}
+  if(missing.length){state.lastFeedback[t.id]={type:'bad',html:`Das Lernprodukt ist noch nicht vollständig. Prüfen Sie: ${missing.map(esc).join(' · ')}`};rerenderKeepScroll();return}
   const invalid=productInvalid(t,a);
-  if(invalid.length){state.lastFeedback[t.id]={type:'bad',html:`Mindestens eine Auswahl passt fachlich nicht. Prüfe noch einmal: ${invalid.map(esc).join(' · ')}`};rerenderKeepScroll();return}
-  state.lastFeedback[t.id]={type:'neutral',html:'Lernprodukt vollständig gespeichert. Prüfe deine offenen Begründungen mit den Kriterien bzw. der Musterlösung und markiere es anschließend selbst als erledigt.'};persistProgress();rerenderKeepScroll();
+  if(invalid.length){state.lastFeedback[t.id]={type:'bad',html:`Mindestens eine Auswahl passt fachlich nicht. Prüfen Sie noch einmal: ${invalid.map(esc).join(' · ')}`};rerenderKeepScroll();return}
+  state.lastFeedback[t.id]={type:'neutral',html:'Lernprodukt vollständig gespeichert. Prüfen Sie Ihre offenen Begründungen anhand der Kriterien bzw. der Musterlösung und markieren Sie das Lernprodukt anschließend selbst als erledigt.'};persistProgress();rerenderKeepScroll();
 }
 function printProduct(t){
   const a=normalizeProductAnswer(t,currentAnswer(t.id,defaultAnswer(t)));const missing=productMissing(t,a);const invalid=productInvalid(t,a);
-  if(missing.length){toast('Fülle das Lernprodukt zuerst vollständig aus.','warn');return}
-  if(invalid.length){toast('Prüfe zuerst deine Auswahl.','warn');return}
+  if(missing.length){toast('Füllen Sie das Lernprodukt zuerst vollständig aus.','warn');return}
+  if(invalid.length){toast('Prüfen Sie zuerst Ihre Auswahl.','warn');return}
   let sheet=$('#printSheet');if(!sheet){sheet=document.createElement('section');sheet.id='printSheet';sheet.className='print-sheet';document.body.append(sheet)}
   const owner=state.user?`${esc(state.user.nickname)} · Klasse ${esc(state.user.className)}`:'Gastmodus';
   const title=t.productTitle||'Lernprodukt';
@@ -380,8 +397,13 @@ function printProduct(t){
     const v=a[f.key];const shown=Array.isArray(v)?v.join(' · '):String(v||'').replace(/\n/g,'<br>');
     return `<div class="print-field"><h2>${esc(f.label)}</h2><p>${shown||'—'}</p></div>`;
   }).join('');
-  const diagram=t.productKind==='aiDesign'?`<div class="print-diagram">${renderAIDesignPreview(a)}</div>`:'';
-  sheet.innerHTML=`<div class="print-brand">NeuroQuest · Lernprodukt</div><h1>${esc(title)}</h1><p class="print-meta">${owner}</p>${diagram}<div class="print-fields">${rows}</div><div class="print-footer"><b>NeuroQuest:</b> Eingabe → Wichtungen → verborgene Verarbeitung → Aktivierungsfunktion → Ausgabe</div>`;
+  let diagram='';
+  if(t.productKind==='aiDesign') diagram=`<div class="print-diagram">${renderAIDesignPreview(a)}</div>`;
+  if(t.productKind==='blackboxCase') diagram=`<div class="print-diagram">${renderBlackboxPreview(a)}</div>`;
+  const footerFlow=t.productKind==='blackboxCase'
+    ? 'Eingabe → Eingabeschicht → Neuronen & Verbindungen → verborgene Schicht → Ausgabeschicht → Ausgabe'
+    : 'Eingabe → Wichtungen → verborgene Verarbeitung → Aktivierungsfunktion → Ausgabe';
+  sheet.innerHTML=`<div class="print-brand">NeuroQuest · Lernprodukt</div><h1>${esc(title)}</h1><p class="print-meta">${owner}</p>${diagram}<div class="print-fields">${rows}</div><div class="print-footer"><b>NeuroQuest:</b> ${footerFlow}</div>`;
   document.body.classList.add('printing-product');const cleanup=()=>document.body.classList.remove('printing-product');window.addEventListener('afterprint',cleanup,{once:true});setTimeout(()=>{window.print();setTimeout(cleanup,1200)},60);
 }
 function bindInteractiveLabs(){
@@ -433,17 +455,17 @@ function isCorrect(t,a){
 function checkTask(t){
   const a=currentAnswer(t.id,defaultAnswer(t));
   const empty=(typeof a==='string'&&!a.trim())||(Array.isArray(a)&&a.length===0);
-  if(empty){state.lastFeedback[t.id]={type:'bad',html:'Bitte gib zuerst eine Antwort ein.'};rerenderKeepScroll();return}
+  if(empty){state.lastFeedback[t.id]={type:'bad',html:'Bitte geben Sie zuerst eine Antwort ein.'};rerenderKeepScroll();return}
   if(isCorrect(t,a)){
     state.lastFeedback[t.id]={type:'good',html:`✓ Richtig. ${esc(t.explanation||'')}`};completeTask(t,false);
   }else{
-    state.lastFeedback[t.id]={type:'bad',html:'Noch nicht ganz. Prüfe deine Eingabe und versuche es erneut. Du kannst bei Bedarf die Musterlösung einblenden.'};rerenderKeepScroll();
+    state.lastFeedback[t.id]={type:'bad',html:'Noch nicht ganz. Prüfen Sie Ihre Eingabe und versuchen Sie es erneut. Sie können bei Bedarf die Musterlösung einblenden.'};rerenderKeepScroll();
   }
 }
 function saveFree(t){
   const a=String(currentAnswer(t.id,'')).trim();
-  if(a.length<10){state.lastFeedback[t.id]={type:'bad',html:'Deine Antwort ist noch sehr kurz. Formuliere zuerst eine nachvollziehbare Erklärung.'};rerenderKeepScroll();return}
-  state.lastFeedback[t.id]={type:'neutral',html:'Antwort gespeichert. Lies sie noch einmal durch. Wenn du möchtest, blende anschließend die Musterlösung ein und vergleiche selbst.'};persistProgress();rerenderKeepScroll();
+  if(a.length<10){state.lastFeedback[t.id]={type:'bad',html:'Ihre Antwort ist noch sehr kurz. Formulieren Sie zunächst eine nachvollziehbare Erklärung.'};rerenderKeepScroll();return}
+  state.lastFeedback[t.id]={type:'neutral',html:'Antwort gespeichert. Lesen Sie sie noch einmal durch. Wenn Sie möchten, blenden Sie anschließend die Musterlösung ein und vergleichen Sie selbst.'};persistProgress();rerenderKeepScroll();
 }
 function completeTask(t,rerender=true){
   const was=state.progress.completed.includes(t.id);
@@ -479,7 +501,7 @@ function authForm(tab='login'){
     $('#logoutBtn').addEventListener('click',logout);return;
   }
   if(tab==='login'){
-    $('#authForms').innerHTML=`<form id="loginForm" class="auth-grid"><div class="field"><label>Klasse</label><input class="auth-input" name="className" required maxlength="40" placeholder="z. B. WG11A"></div><div class="field"><label>Nickname</label><input class="auth-input" name="nickname" required maxlength="24" placeholder="dein Nickname"></div><div class="field"><label>Passwort</label><input class="auth-input" name="password" type="password" required minlength="6" maxlength="128" placeholder="mindestens 6 Zeichen"></div><button class="primary-btn">Anmelden</button><div id="authMessage"></div></form>`;
+    $('#authForms').innerHTML=`<form id="loginForm" class="auth-grid"><div class="field"><label>Klasse</label><input class="auth-input" name="className" required maxlength="40" placeholder="z. B. WG11A"></div><div class="field"><label>Nickname</label><input class="auth-input" name="nickname" required maxlength="24" placeholder="Ihr Nickname"></div><div class="field"><label>Passwort</label><input class="auth-input" name="password" type="password" required minlength="6" maxlength="128" placeholder="mindestens 6 Zeichen"></div><button class="primary-btn">Anmelden</button><div id="authMessage"></div></form>`;
     $('#loginForm').addEventListener('submit',doLogin);
   }else{
     $('#authForms').innerHTML=`<form id="registerForm" class="auth-grid"><div class="role-row"><label class="role-choice"><input type="radio" name="role" value="student" checked> Schüler/in</label><label class="role-choice"><input type="radio" name="role" value="teacher"> Lehrkraft</label></div><div class="field"><label>Klasse</label><input class="auth-input" name="className" required maxlength="40" placeholder="z. B. WG11A"></div><div class="field"><label>Nickname</label><input class="auth-input" name="nickname" required minlength="2" maxlength="24" placeholder="selbst gewählter Nickname"></div><div class="field"><label>Passwort</label><input class="auth-input" name="password" type="password" required minlength="6" maxlength="128" placeholder="mindestens 6 Zeichen"></div><div class="field hidden" id="teacherCodeField"><label>Lehrercode</label><input class="auth-input" name="teacherCode" type="password" maxlength="128" placeholder="Code aus Netlify"></div><button class="primary-btn">Konto anlegen</button><div id="authMessage"></div></form>`;
@@ -495,7 +517,7 @@ async function doLogin(e){
 }
 async function doRegister(e){
   e.preventDefault();const f=new FormData(e.target);const btn=e.target.querySelector('button');btn.disabled=true;
-  try{const guestSnapshot=readLocalProgress();const data=await api('/api/auth',{method:'POST',body:JSON.stringify({action:'register',role:f.get('role'),className:f.get('className'),nickname:f.get('nickname'),password:f.get('password'),teacherCode:f.get('teacherCode')||''})});if(!state.user&&guestSnapshot.completed.length){data.progress=guestSnapshot}await acceptSession(data);if(guestSnapshot.completed.length)saveCloudProgress();$('#authDialog').close();$('#startDialog').open&&$('#startDialog').close();toast('Konto angelegt. Deine Fortschritte werden jetzt gespeichert.','good')}catch(err){authMessage(err.message)}finally{btn.disabled=false}
+  try{const guestSnapshot=readLocalProgress();const data=await api('/api/auth',{method:'POST',body:JSON.stringify({action:'register',role:f.get('role'),className:f.get('className'),nickname:f.get('nickname'),password:f.get('password'),teacherCode:f.get('teacherCode')||''})});if(!state.user&&guestSnapshot.completed.length){data.progress=guestSnapshot}await acceptSession(data);if(guestSnapshot.completed.length)saveCloudProgress();$('#authDialog').close();$('#startDialog').open&&$('#startDialog').close();toast('Konto angelegt. Ihre Fortschritte werden jetzt gespeichert.','good')}catch(err){authMessage(err.message)}finally{btn.disabled=false}
 }
 async function acceptSession(data){
   state.token=data.token;state.user=data.user;localStorage.setItem(STORAGE.token,state.token);localStorage.setItem(STORAGE.guestStarted,'1');
@@ -503,7 +525,7 @@ async function acceptSession(data){
 }
 async function logout(){
   try{await api('/api/auth',{method:'POST',body:JSON.stringify({action:'logout'})})}catch{}
-  state.token='';state.user=null;localStorage.removeItem(STORAGE.token);state.progress=normalizeProgress(JSON.parse(localStorage.getItem(STORAGE.guest)||'null'));state.activeSection=state.progress.currentSection||'start';$('#authDialog').close();renderAll();toast('Abgemeldet. Du bist jetzt im Gastmodus.')
+  state.token='';state.user=null;localStorage.removeItem(STORAGE.token);state.progress=normalizeProgress(JSON.parse(localStorage.getItem(STORAGE.guest)||'null'));state.activeSection=state.progress.currentSection||'start';$('#authDialog').close();renderAll();toast('Abgemeldet. Sie befinden sich jetzt im Gastmodus.')
 }
 async function restoreSession(){
   if(!state.token){state.progress=readLocalProgress();state.activeSection=state.progress.currentSection||'start';return}

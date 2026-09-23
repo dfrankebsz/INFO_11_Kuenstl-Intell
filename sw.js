@@ -1,4 +1,4 @@
-const CACHE = 'neuroquest-v3';
+const CACHE = 'neuroquest-v4';
 const CORE = ['/', '/index.html', '/styles.css', '/app.js', '/course-data.js', '/assets/icon.svg', '/assets/shopsmart-ai.svg', '/assets/network.svg', '/assets/activation.svg', '/manifest.webmanifest'];
 self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate', e => e.waitUntil(

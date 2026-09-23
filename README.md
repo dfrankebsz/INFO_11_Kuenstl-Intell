@@ -26,19 +26,19 @@ Der Kurs verwendet **Netlify Functions + Netlify Blobs**. Supabase und ein allge
 2. Eingabe- und Ausgabeschicht
 3. Künstliches Neuron und Verbindungen
 4. Verborgene Schichten
-5. Lernprodukt 1: „Öffne die Blackbox“
+5. Lernprodukt 1: „Öffnen Sie die Blackbox am Fall“
 6. Wichtungen
 7. Aktivierungsfunktionen
 8. Zusammenspiel
 9. Vollständiges Netz
 10. Anwendungen, Training & Grenzen
-11. Lernprodukt 2: „Entwirf deine eigene Unternehmens-KI“
+11. Lernprodukt 2: „Entwerfen Sie Ihre eigene Unternehmens-KI“
 
 Der Kurs enthält 72 Pflichtaufgaben plus Bonus-Challenges. Die interne AFB-Verteilung ist 25 % / 50 % / 25 %, wird den Lernenden aber nicht angezeigt.
 
 ## Lernprodukte
 
-**Lernprodukt 1** erklärt ein vorgegebenes Netz am Beispiel einer Paket-Qualitätskontrolle.
+**Lernprodukt 1** ist jetzt fallbezogen: Die Lernenden wählen einen von vier Unternehmensfällen und erklären daran Eingabe, Eingabeschicht, künstliche Neuronen, Verbindungen, verborgene Schicht, Ausgabeschicht und konkrete Ausgabe. Ein nicht auswählbares Musik-App-Beispiel dient als Muster. Das Ergebnis kann als PDF gedruckt werden.
 
 **Lernprodukt 2** ist ein KI-Designer: Die Lernenden wählen einen Unternehmensfall, definieren drei Eingaben, qualitative Wichtungen, eine Aktivierungsfunktion und eine Ausgabe. Ein Live-Schaubild wird im Kurs erzeugt und kann über den Browser-Druckdialog als PDF gespeichert werden. Die Musterlösung nutzt bewusst einen anderen Fall (Frühstücksnachfrage im Hotel).
 

@@ -5,7 +5,7 @@
 <text x="72" y="94" font-family="Arial" font-size="22" font-weight="700" fill="#173c6b">ShopSmart</text>
 <rect x="72" y="122" width="172" height="94" rx="14" fill="#f4f8fc"/>
 <path d="M105 190c18-36 40-44 62-30 18 11 31 15 53 18l-6 19H104z" fill="#2e6aa6"/>
-<text x="72" y="248" font-family="Arial" font-size="16" fill="#4f6577">Empfehlung für dich</text>
+<text x="72" y="248" font-family="Arial" font-size="16" fill="#4f6577">Empfehlung für Sie</text>
 <rect x="72" y="266" width="158" height="48" rx="12" fill="#173c6b"/>
 <text x="89" y="296" font-family="Arial" font-size="17" font-weight="700" fill="#fff">TrailFlex Pro</text>
 <circle cx="360" cy="110" r="30" fill="#7cc5ff"/><circle cx="360" cy="210" r="30" fill="#7cc5ff"/><circle cx="360" cy="310" r="30" fill="#7cc5ff"/>

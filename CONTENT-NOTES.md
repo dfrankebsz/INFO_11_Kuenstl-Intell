@@ -5,5 +5,5 @@
 - Interne AFB-Verteilung Pflichtaufgaben: AFB 1 = 18, AFB 2 = 36, AFB 3 = 18
 - Diese AFB-Angaben werden in der Benutzeroberfläche nicht angezeigt.
 - Roter Faden: ShopSmart und personalisierte Produktempfehlungen.
-- Lernprodukt 1: Paket-Qualitätskontrolle (vorgegebener Fall).
+- Lernprodukt 1: Wahl aus vier Fällen (Rechnungswesen, Etikettenprüfung, Kundenservice, Ladungssicherung); fallbezogene Blackbox-Erklärung. Musterbeispiel Musik-App ist nicht auswählbar.
 - Lernprodukt 2: freie Wahl aus sechs Unternehmensfällen; Musterlösung „Hotel-Frühstücksnachfrage“ ist nicht auswählbar.
